@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Grid, Button, Input } from '@chakra-ui/react';
+import { Box, Flex, Button, Input, Stack } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import io from 'socket.io-client';
 
@@ -38,24 +38,31 @@ function App() {
     setMessage(e.target.value);
   };
   return (
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
+    <Box mx={4}>
+      <Flex justify="end" my={3}>
+        <ColorModeSwitcher />
+      </Flex>
+      <Box border="1px" borderColor="gray.200" h="100%">
         {messages.map((message, index) => {
           if (message.id === yourID) {
             return <p>{message.body}</p>;
           }
-          <p>{message.body}</p>;
+          return <p>{message.body}</p>;
         })}
+      </Box>
+      <Flex justify="center" my={2}>
         <form onSubmit={sendMessage}>
-          <Input
-            placeholder="Enter message"
-            width="auto"
-            onChange={handleChange}
-          />
-          <Button colorScheme="blackAlpha">Send</Button>
+          <Stack isInline>
+            <Input
+              placeholder="Enter message"
+              width={800}
+              onChange={handleChange}
+              value={message}
+            />
+            <Button type="submit">Send</Button>
+          </Stack>
         </form>
-      </Grid>
+      </Flex>
     </Box>
   );
 }

@@ -9,13 +9,13 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 app.get("/", (req, res) => {});
 
-io.on("connection", () => {
+io.on("connection", (socket) => {
   console.log("a user connected");
   // Each client will communicate with the server (IO) through a socket with a unique id
   socket.emit("your id", socket.id);
 
   socket.on("disconnect", () => {
-    console.log("use disconnected");
+    console.log("user disconnected");
   });
   socket.on("chat message", (msg) => {
     // Emit to all users
