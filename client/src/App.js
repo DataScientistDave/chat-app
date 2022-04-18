@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Flex, Button, Input, Stack } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Button,
+  Input,
+  Stack,
+  Heading,
+  Spacer,
+} from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import io from 'socket.io-client';
 
@@ -39,27 +47,40 @@ function App() {
   };
   return (
     <Box mx={4}>
-      <Flex justify="end" my={3}>
-        <ColorModeSwitcher />
+      <Flex my={3} justify="center">
+        <Heading>Web Chat</Heading>
+        <ColorModeSwitcher position="absolute" right={2} mr={1} />
       </Flex>
-      <Box border="1px" borderColor="gray.200" h="100%">
+      <Box border="1px" borderColor="alternative" h="100%">
         {messages.map((message, index) => {
           if (message.id === yourID) {
-            return <p>{message.body}</p>;
+            return (
+              <Flex justify="start" ml={3} key={index}>
+                <p>{message.body}</p>
+              </Flex>
+            );
           }
-          return <p>{message.body}</p>;
+          return (
+            <Flex justify="end" mr={3} key={index}>
+              <p>{message.body}</p>
+            </Flex>
+          );
         })}
       </Box>
       <Flex justify="center" my={2}>
         <form onSubmit={sendMessage}>
           <Stack isInline>
             <Input
+              isInvalid
               placeholder="Enter message"
               width={800}
               onChange={handleChange}
-              value={message}
+              focusBorderColor="#9BDEAC"
+              errorBorderColor="#6F4758"
             />
-            <Button type="submit">Send</Button>
+            <Button type="submit" variant="new-color">
+              Send
+            </Button>
           </Stack>
         </form>
       </Flex>
